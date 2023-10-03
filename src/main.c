@@ -24,13 +24,13 @@
 
 #include "glyphs.h"
 
-#include "boilerplate_plugin.h"
+#include "figment_plugin.h"
 
 // List of selectors supported by this plugin.
 static const uint32_t FIGMENT_DEPOSIT_SELECTOR = 0x4f498c73;
 
 // Array of all the different boilerplate selectors. Make sure this follows the same order as the
-// enum defined in `boilerplate_plugin.h`
+// enum defined in `figment_plugin.h`
 const uint32_t FIGMENT_SELECTORS[NUM_SELECTORS] = {
     FIGMENT_DEPOSIT_SELECTOR,
 };
