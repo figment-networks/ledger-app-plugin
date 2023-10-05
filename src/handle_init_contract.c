@@ -41,20 +41,17 @@ void handle_init_contract(void *parameters) {
         return;
     }
 
+    msg->result = ETH_PLUGIN_RESULT_OK;
+
     // Set `next_param` to be the first field we expect to parse.
-    // EDIT THIS: Adapt the `cases`, and set the `next_param` to be the first parameter you expect
-    // to parse.
     switch (context->selectorIndex) {
         case FIGMENT_DEPOSIT:
-            context->next_param = MIN_AMOUNT_RECEIVED;
             break;
+
         // Keep this
         default:
             PRINTF("Missing selectorIndex: %d\n", context->selectorIndex);
             msg->result = ETH_PLUGIN_RESULT_ERROR;
             return;
     }
-
-    // Return valid status.
-    msg->result = ETH_PLUGIN_RESULT_OK;
 }
