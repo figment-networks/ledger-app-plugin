@@ -20,3 +20,4 @@ jobs:
   guidelines_enforcer:
     name: Call Ledger guidelines_enforcer
     uses: LedgerHQ/ledger-app-workflows/.github/workflows/reusable_guidelines_enforcer.yml@v1
+    if: github.repository_owner == 'LedgerHQ'
