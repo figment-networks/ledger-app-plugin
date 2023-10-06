@@ -15,7 +15,7 @@ const abi = require(abiPath);
 nano_models.forEach(function(model) {
   jest.setTimeout(20000);
 
-  test('[Nano ' + model.letter + '] Stake', zemu(model, async (sim, eth) => {
+  test('[Nano ' + model.letter + '] Stake ETH', zemu(model, async (sim, eth) => {
     const contract = new ethers.Contract(contractAddr, abi);
 
     // Signature: deposit(bytes[], bytes[], bytes[], bytes32[])

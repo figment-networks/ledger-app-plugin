@@ -11,7 +11,7 @@ void handle_query_contract_id(void *parameters) {
     strlcpy(msg->name, PLUGIN_NAME, msg->nameLength);
 
     if (context->selectorIndex == FIGMENT_DEPOSIT) {
-        strlcpy(msg->version, "Stake", msg->versionLength);
+        strlcpy(msg->version, "Stake ETH", msg->versionLength);
         msg->result = ETH_PLUGIN_RESULT_OK;
     } else {
         PRINTF("Selector index: %d not supported\n", context->selectorIndex);
