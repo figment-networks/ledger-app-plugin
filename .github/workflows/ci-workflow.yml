@@ -133,6 +133,14 @@ jobs:
   jobs-e2e-tests:
     name: E2E Tests
     needs: [job_build_debug_plugin, job_build_debug_app]
+    strategy:
+      matrix:
+        include:
+          - sdk: "$NANOS_SDK"
+            name: "nanos"
+          - sdk: "$NANOX_SDK"
+            name: "nanox"
+
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
