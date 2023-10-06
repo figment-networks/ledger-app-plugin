@@ -14,7 +14,6 @@ static void set_amount_ui(ethQueryContractUI_t *msg) {
 
 void handle_query_contract_ui(void *parameters) {
     ethQueryContractUI_t *msg = (ethQueryContractUI_t *) parameters;
-    context_t *context = (context_t *) msg->pluginContext;
 
     // msg->title is the upper line displayed on the device.
     // msg->msg is the lower line displayed on the device.
