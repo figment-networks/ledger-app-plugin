@@ -1,9 +1,9 @@
 import "core-js/stable";
 import "regenerator-runtime/runtime";
 
-import { waitForAppScreen, zemu, genericTx, nano_models } from './test.fixture';
-import { ethers } from "ethers";
-import { parseEther } from "ethers/lib/utils";
+import { ethers, Transaction } from "ethers";
+import { ledgerService } from "@ledgerhq/hw-app-eth";
+import { waitForAppScreen, zemu, genericTx, nano_models } from "./test.fixture";
 
 const contractAddr = "0xf0075b3cf8953d3e23b0ef65960913fd97eb5227";
 const pluginName = "figment";
@@ -19,7 +19,7 @@ nano_models.forEach(function(model) {
     const contract = new ethers.Contract(contractAddr, abi);
 
     // Signature: deposit(bytes[], bytes[], bytes[], bytes32[])
-    const { data } = await contract.populateTransaction.deposit([], [], [], []);
+    const { data } = await contract.deposit.populateTransaction([], [], [], []);
 
     // Get the generic transaction template
     let unsignedTx = genericTx;
@@ -28,12 +28,22 @@ nano_models.forEach(function(model) {
     // Modify the attached data
     unsignedTx.data = data;
     // Modify the number of ETH sent
-    unsignedTx.value = parseEther("64");
+    unsignedTx.value = ethers.parseEther("64");
 
     // Create serializedTx and remove the "0x" prefix
-    const serializedTx = ethers.utils.serializeTransaction(unsignedTx).slice(2);
+    const serializedTx = Transaction.from(unsignedTx).unsignedSerialized.slice(2);
 
-    const tx = eth.signTransaction("44'/60'/0'/0", serializedTx);
+    // Resolve transaction metadata
+    const resolution = await ledgerService.resolveTransaction(
+      serializedTx,
+      eth.loadConfig,
+      {
+        externalPlugins: true,
+      }
+    );
+
+    // Sign the transaction
+    const tx = eth.signTransaction("44'/60'/0'/0", serializedTx, resolution);
 
     // Wait for the application to actually load and parse the transaction
     await waitForAppScreen(sim);
