@@ -1,32 +1,97 @@
-# app-plugin-boilerplate
+# app-plugin-figment
 
-This repo is a meant to be a forkable example of a plugin.
+<img src="assets/figment-logo-light.png#gh-light-mode-only" width="173" height="67">
+<img src="assets/figment-logo-dark.png#gh-dark-mode-only" width="173" height="67">
 
-Plugins are lightweight applications that go hand-in-hand with the Ethereum
-Application on a Nano S / X device.
+This plugin allows users to safely interact with [Figment's deposit smart contract](https://etherscan.io/address/0xf0075b3cf8953d3e23b0ef65960913fd97eb5227) by parsing the transaction data and displaying its content in a human-readable way.
 
-They allow users to safely interact with smart contracts by parsing the
-transaction data and displaying its content in a human readable way. This is
-done on a "per contract" basis, meaning a plugin is required for every DApp.
+The plugin is compatible with the Nano S and Nano X device.
 
-The code has been commented, and special "EDIT THIS" comments indicate where
-developers are expected to adapt the code to their own needs.
+## Build
 
-It is STRONGLY recommended to follow the
-[plugin guide](https://developers.ledger.com/docs/dapp/nano-plugin/overview/)
-in order to better understand the flow and the context for plugins.
+Before building the plugin, you need to set up a working environment:
 
-## Ethereum SDK
+```shell
+mkdir plugin_dev
+cd plugin_dev
+```
 
-Ethereum plugins need the [Ethereum SDK](https://github.com/LedgerHQ/ethereum-plugin-sdk).
-You can use the `ETHEREUM_PLUGIN_SDK` variable to point to the directory where you cloned
-this repository. By default, the `Makefile` expects it to be at the root directory of this
-plugin repository, by the `ethereum-plugin-sdk` name.
+Inside `plugin_dev`, clone the plugin repository (including submodules):
 
-This repository is deliberately **not** a submodule. You can see that the CI workflows
-clone and checkout either the latest `master` or on `develop` references. This ensures
-the code is compiled and tested on the latest version of the SDK.
+```shell
+git clone --recurse-submodules git@github.com:figment-networks/ledger-app-plugin.git
+```
 
-## Formatting
+You can compile the plugin using a Docker image provided by Ledger.
+Make sure you have Docker installed and execute:
 
-The C source code is expected to be formatted with `clang-format` 11.0.0 or higher.
+```shell
+docker pull ghcr.io/ledgerhq/ledger-app-builder/ledger-app-dev-tools
+```
+
+Then, start a Docker container and attach a console:
+
+```shell
+docker run --rm -ti -v "$(realpath .):/app" ghcr.io/ledgerhq/ledger-app-builder/ledger-app-dev-tools
+```
+
+Inside the container, build the plugin by running:
+
+```shell
+cd ledger-app-plugin
+make
+```
+
+For more information, see [Setup](https://developers.ledger.com/docs/dapp/embedded-plugin/environment-setup/).
+
+## Test
+
+In order to run a test suite, you need to compile both the plugin and the Ethereum app.
+
+Inside the `plugin_dev` directory, clone the Ethereum application:
+
+```shell
+git clone --recurse-submodules https://github.com/LedgerHQ/app-ethereum
+```
+
+Then, start a Docker container from within the `plugin_dev` directory:
+
+```shell
+docker run --rm -ti -v "$(realpath .):/app" ghcr.io/ledgerhq/ledger-app-builder/ledger-app-dev-tools
+```
+
+Inside the container, run the following build script:
+
+```shell
+cd ledger-app-plugin/tests
+./build_local_test_elfs.sh
+```
+
+Now you can exit the container and execute the tests:
+
+```shell
+cd ledger-app-plugin/tests
+yarn
+yarn test
+```
+
+## Screens
+
+### Nano S
+
+![](tests/snapshots/nanos_deposit/00000.png)
+![](tests/snapshots/nanos_deposit/00001.png)
+![](tests/snapshots/nanos_deposit/00002.png)
+![](tests/snapshots/nanos_deposit/00003.png)
+![](tests/snapshots/nanos_deposit/00004.png)
+![](tests/snapshots/nanos_deposit/00005.png)
+
+
+### Nano X
+
+![](tests/snapshots/nanox_deposit/00000.png)
+![](tests/snapshots/nanox_deposit/00001.png)
+![](tests/snapshots/nanox_deposit/00002.png)
+![](tests/snapshots/nanox_deposit/00003.png)
+![](tests/snapshots/nanox_deposit/00004.png)
+![](tests/snapshots/nanox_deposit/00005.png)
