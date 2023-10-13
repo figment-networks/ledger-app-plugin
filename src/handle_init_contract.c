@@ -15,6 +15,9 @@ void handle_init_contract(void *parameters) {
     // Cast the msg to the type of structure we expect (here, ethPluginInitContract_t).
     ethPluginInitContract_t *msg = (ethPluginInitContract_t *) parameters;
 
+    // JEC - if the caller verifies that this parameter is not NULL before sending, that seems
+    // reasonable not to check here. 
+
     // Make sure we are running a compatible version.
     if (msg->interfaceVersion != ETH_PLUGIN_INTERFACE_VERSION_LATEST) {
         // If not the case, return the `UNAVAILABLE` status.
@@ -25,6 +28,8 @@ void handle_init_contract(void *parameters) {
     // Double check that the `context_t` struct is not bigger than the maximum size (defined by
     // `msg->pluginContextLength`).
     if (msg->pluginContextLength < sizeof(context_t)) {
+
+        // JEC - did you want to prince the size it got in this debug print?
         PRINTF("Plugin parameters structure is bigger than allowed size\n");
         msg->result = ETH_PLUGIN_RESULT_ERROR;
         return;

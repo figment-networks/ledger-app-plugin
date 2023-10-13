@@ -2,6 +2,7 @@
 
 // Set UI for the "Amount" screen.
 static void set_amount_ui(ethQueryContractUI_t *msg) {
+    // JEC - consider checking return value
     strlcpy(msg->title, "Amount", msg->titleLength);
 
     const uint8_t *eth_amount = msg->pluginSharedRO->txContent->value.value;
@@ -9,6 +10,8 @@ static void set_amount_ui(ethQueryContractUI_t *msg) {
 
     // Converts the uint256 number located in `eth_amount` to its string representation and
     // copies this to `msg->msg`.
+
+    // JEC - consider checking return value
     amountToString(eth_amount, eth_amount_size, WEI_TO_ETHER, "ETH", msg->msg, msg->msgLength);
 }
 

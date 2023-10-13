@@ -8,6 +8,7 @@ void handle_query_contract_id(void *parameters) {
     // msg->version will be the lower sentence displayed on the screen.
 
     // For the first screen, display the plugin name.
+    // JEC - consider checking the return value of strlcpy and printing error if needed
     strlcpy(msg->name, PLUGIN_NAME, msg->nameLength);
 
     if (context->selectorIndex == FIGMENT_DEPOSIT) {

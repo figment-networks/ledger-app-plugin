@@ -17,6 +17,8 @@
 
 // 
 // This is a dummy PR. The only purpose was for me, Jared, to do a code review and comment on this code. 
+// There is no good way I found in Github to comment on unchanged lines of code anywhere. So... I will
+// add my comments with //JEC - <comment>
 //
 
 #include <stdbool.h>
@@ -64,6 +66,9 @@ void dispatch_plugin_calls(int message, void *parameters) {
 }
 
 void handle_query_ui_exception(unsigned int *args) {
+    // JEC - is there ever a possibility that args could be NULL? Even if there wasn't, 
+    // I always recommend checking before dereferencing as this could bug check if NULL
+    // is dereferenced. 
     switch (args[0]) {
         case ETH_PLUGIN_QUERY_CONTRACT_UI:
             ((ethQueryContractUI_t *) args[1])->result = ETH_PLUGIN_RESULT_ERROR;
@@ -120,6 +125,9 @@ __attribute__((section(".boot"))) int main(int arg0) {
             } else {
                 // Not called from dashboard: called from the ethereum app!
                 const unsigned int *args = (const unsigned int *) arg0;
+
+                // JEC - I always prefer checking before dereferencing that indeed args[0] and 
+                // args[1] are not NULL before derefencing 
 
                 // If `ETH_PLUGIN_CHECK_PRESENCE` is set, this means the caller is just trying to
                 // know whether this app exists or not. We can skip `dispatch_plugin_calls`.
