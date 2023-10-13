@@ -67,8 +67,7 @@ void dispatch_plugin_calls(int message, void *parameters) {
 
 void handle_query_ui_exception(unsigned int *args) {
     // JEC - is there ever a possibility that args could be NULL? Even if there wasn't, 
-    // I always recommend checking before dereferencing as this could bug check if NULL
-    // is dereferenced. 
+    // I always recommend checking before dereferencing
     switch (args[0]) {
         case ETH_PLUGIN_QUERY_CONTRACT_UI:
             ((ethQueryContractUI_t *) args[1])->result = ETH_PLUGIN_RESULT_ERROR;
