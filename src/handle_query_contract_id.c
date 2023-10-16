@@ -8,16 +8,14 @@ void handle_query_contract_id(void *parameters) {
     // msg->version will be the lower sentence displayed on the screen.
 
     // For the first screen, display the plugin name.
-    size_t length = strlcpy(msg->name, PLUGIN_NAME, msg->nameLength);
-    if (length < strlen(PLUGIN_NAME)) {
+    if (strlcpy(msg->name, PLUGIN_NAME, msg->nameLength) < strlen(PLUGIN_NAME)) {
         PRINTF("Screen title truncated: %s\n", msg->name);
     }
 
     if (context->selectorIndex == FIGMENT_DEPOSIT) {
         const char *message = "Stake ETH";
 
-        size_t length = strlcpy(msg->version, message, msg->versionLength);
-        if (length < strlen(message)) {
+        if (strlcpy(msg->version, message, msg->versionLength) < strlen(message)) {
             PRINTF("Screen message truncated: %s\n", msg->version);
         }
 

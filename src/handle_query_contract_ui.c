@@ -4,8 +4,7 @@
 static void set_amount_ui(ethQueryContractUI_t *msg) {
     const char *title = "Amount";
 
-    size_t length = strlcpy(msg->title, title, msg->titleLength);
-    if (length < strlen(title)) {
+    if (strlcpy(msg->title, title, msg->titleLength) < strlen(title)) {
         PRINTF("Screen title truncated: %s\n", msg->title);
     }
 
