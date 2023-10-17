@@ -8,10 +8,17 @@ void handle_query_contract_id(void *parameters) {
     // msg->version will be the lower sentence displayed on the screen.
 
     // For the first screen, display the plugin name.
-    strlcpy(msg->name, PLUGIN_NAME, msg->nameLength);
+    if (strlcpy(msg->name, PLUGIN_NAME, msg->nameLength) < strlen(PLUGIN_NAME)) {
+        PRINTF("Screen title truncated: %s\n", msg->name);
+    }
 
     if (context->selectorIndex == FIGMENT_DEPOSIT) {
-        strlcpy(msg->version, "Stake ETH", msg->versionLength);
+        const char *message = "Stake ETH";
+
+        if (strlcpy(msg->version, message, msg->versionLength) < strlen(message)) {
+            PRINTF("Screen message truncated: %s\n", msg->version);
+        }
+
         msg->result = ETH_PLUGIN_RESULT_OK;
     } else {
         PRINTF("Selector index: %d not supported\n", context->selectorIndex);

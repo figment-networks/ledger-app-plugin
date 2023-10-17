@@ -2,7 +2,11 @@
 
 // Set UI for the "Amount" screen.
 static void set_amount_ui(ethQueryContractUI_t *msg) {
-    strlcpy(msg->title, "Amount", msg->titleLength);
+    const char *title = "Amount";
+
+    if (strlcpy(msg->title, title, msg->titleLength) < strlen(title)) {
+        PRINTF("Screen title truncated: %s\n", msg->title);
+    }
 
     const uint8_t *eth_amount = msg->pluginSharedRO->txContent->value.value;
     uint8_t eth_amount_size = msg->pluginSharedRO->txContent->value.length;
