@@ -19,7 +19,7 @@ cd plugin_dev
 Inside `plugin_dev`, clone the plugin repository (including submodules):
 
 ```shell
-git clone --recurse-submodules git@github.com:figment-networks/ledger-app-plugin.git
+git clone --recurse-submodules https://github.com/figment-networks/ledger-app-plugin
 ```
 
 You can compile the plugin using a Docker image provided by Ledger.
