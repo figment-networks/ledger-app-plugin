@@ -21,8 +21,8 @@ function assert(condition, message) {
 
 // Function to generate the plugin configuration.
 function generate_plugin_config(network = "ethereum") {
-  var fs = require("fs");
-  var files = fs.readdirSync(`networks/${network}/${pluginFolder}/abis/`);
+  const fs = require("fs");
+  const files = fs.readdirSync(`networks/${network}/${pluginFolder}/abis/`);
 
   // `contracts_to_abis` holds a maping of contract addresses to abis
   let contracts_to_abis = {};
