@@ -1,8 +1,6 @@
 #include "figment_plugin.h"
 
-void handle_finalize(void *parameters) {
-    ethPluginFinalize_t *msg = (ethPluginFinalize_t *) parameters;
-
+void handle_finalize(ethPluginFinalize_t *msg) {
     msg->uiType = ETH_UI_TYPE_GENERIC;
 
     msg->numScreens = 1;
