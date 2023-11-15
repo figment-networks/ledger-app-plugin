@@ -21,7 +21,55 @@ const abi = require(abiPath);
 const withdrawalAddress =
   "0x100000000000000000000000c146bbfede2786d56047d90b8a5805da5732c0b9";
 
-const prepareTransaction = async (eth, { validatorsCount = 1 }) => {
+nano_models.forEach(function (model) {
+  jest.setTimeout(20000);
+
+  test(
+    `[Nano ${model.letter}] Stake 32 ETH`,
+    zemu(model, async (sim, eth) => {
+      await simulateTransaction(model, sim, eth, {
+        testName: "single_validator",
+        validatorsCount: 1,
+        rightClicks: model.letter === "S" ? 7 : 5,
+      });
+    }),
+  );
+
+  test(
+    `[Nano ${model.letter}] Stake 128 ETH`,
+    zemu(model, async (sim, eth) => {
+      await simulateTransaction(model, sim, eth, {
+        testName: "multiple_validators",
+        validatorsCount: 4,
+        rightClicks: model.letter === "S" ? 7 : 5,
+      });
+    }),
+  );
+});
+
+async function simulateTransaction(
+  model,
+  sim,
+  eth,
+  { testName, validatorsCount, rightClicks },
+) {
+  // Prepare a transaction
+  const tx = prepareTransaction(eth, { validatorsCount });
+
+  // Wait for the application to actually load and parse the transaction
+  await waitForAppScreen(sim);
+
+  // Navigate the display by pressing the right button `rightClicks` times, then pressing both buttons to accept the transaction.
+  await sim.navigateAndCompareSnapshots(
+    ".",
+    `${model.name}_deposit/${testName}`,
+    [rightClicks, 0],
+  );
+
+  await tx;
+}
+
+async function prepareTransaction(eth, { validatorsCount = 1 }) {
   const contract = new ethers.Contract(contractAddress, abi);
 
   // Signature: deposit(bytes[], bytes[], bytes[], bytes32[])
@@ -41,7 +89,7 @@ const prepareTransaction = async (eth, { validatorsCount = 1 }) => {
   // Modify the number of ETH sent
   unsignedTx.value = ethers.parseEther((32 * validatorsCount).toString());
 
-  // Create serializedTx and remove the "0x" prefix
+  // Create `serializedTx` and remove the "0x" prefix
   const serializedTx = Transaction.from(unsignedTx).unsignedSerialized.slice(2);
 
   // Resolve transaction metadata
@@ -53,54 +101,6 @@ const prepareTransaction = async (eth, { validatorsCount = 1 }) => {
     },
   );
 
+  // Sign the transaction
   return eth.signTransaction("44'/60'/0'/0", serializedTx, resolution);
-};
-
-// Test from constructed transaction
-nano_models.forEach(function (model) {
-  jest.setTimeout(20000);
-
-  test(
-    "[Nano " + model.letter + "] Stake 32 ETH",
-    zemu(model, async (sim, eth) => {
-      // Prepare a transaction
-      const tx = prepareTransaction(eth, { validatorsCount: 1 });
-
-      // Wait for the application to actually load and parse the transaction
-      await waitForAppScreen(sim);
-
-      const rightClicks = model.letter === "S" ? 7 : 5;
-
-      // Navigate the display by pressing the right button `rightClicks` times, then pressing both buttons to accept the transaction.
-      await sim.navigateAndCompareSnapshots(
-        ".",
-        model.name + "_deposit/single_validator",
-        [rightClicks, 0],
-      );
-
-      await tx;
-    }),
-  );
-
-  test(
-    "[Nano " + model.letter + "] Stake 128 ETH",
-    zemu(model, async (sim, eth) => {
-      // Prepare a transaction
-      const tx = prepareTransaction(eth, { validatorsCount: 4 });
-
-      // Wait for the application to actually load and parse the transaction
-      await waitForAppScreen(sim);
-
-      const rightClicks = model.letter === "S" ? 7 : 5;
-
-      // Navigate the display by pressing the right button `rightClicks` times, then pressing both buttons to accept the transaction.
-      await sim.navigateAndCompareSnapshots(
-        ".",
-        model.name + "_deposit/multiple_validators",
-        [rightClicks, 0],
-      );
-
-      await tx;
-    }),
-  );
-});
+}
