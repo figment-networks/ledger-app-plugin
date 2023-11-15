@@ -15,8 +15,8 @@ static void handle_deposit(ethPluginProvideParameter_t *msg, context_t *context)
             break;
 
         case WITHDRAWAL_CREDENTIALS_ARRAY:
-            context->offset = SELECTOR_SIZE +
-                U2BE(msg->parameter, PARAMETER_LENGTH - sizeof(context->offset));
+            context->offset =
+                SELECTOR_SIZE + U2BE(msg->parameter, PARAMETER_LENGTH - sizeof(context->offset));
 
             context->go_to_offset = true;
             context->next_param = WITHDRAWAL_CREDENTIALS_ARRAY_SIZE;
@@ -29,7 +29,7 @@ static void handle_deposit(ethPluginProvideParameter_t *msg, context_t *context)
 
         case WITHDRAWAL_CREDENTIALS_OFFSET:
             context->offset = msg->parameterOffset +
-                U2BE(msg->parameter, PARAMETER_LENGTH - sizeof(context->offset));
+                              U2BE(msg->parameter, PARAMETER_LENGTH - sizeof(context->offset));
 
             context->go_to_offset = true;
             context->next_param = WITHDRAWAL_CREDENTIALS_SIZE;
@@ -41,8 +41,9 @@ static void handle_deposit(ethPluginProvideParameter_t *msg, context_t *context)
             break;
 
         case WITHDRAWAL_CREDENTIALS:
-            copy_address(context->withdrawal_address, msg->parameter,
-                sizeof(context->withdrawal_address));
+            copy_address(context->withdrawal_address,
+                         msg->parameter,
+                         sizeof(context->withdrawal_address));
 
             context->next_param = IGNORED_PARAMETERS;
             break;

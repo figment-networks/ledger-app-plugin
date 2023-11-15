@@ -15,8 +15,12 @@ static bool set_amount_ui(ethQueryContractUI_t *msg) {
 
     // Converts the uint256 number located in `eth_amount` to its string representation and
     // copies this to `msg->msg`.
-    return amountToString(eth_amount, eth_amount_size, WEI_TO_ETHER, "ETH", msg->msg,
-        msg->msgLength);
+    return amountToString(eth_amount,
+                          eth_amount_size,
+                          WEI_TO_ETHER,
+                          "ETH",
+                          msg->msg,
+                          msg->msgLength);
 }
 
 // Set UI for the "Withdrawal Address" screen.
@@ -35,7 +39,7 @@ static bool set_withdrawal_address_ui(ethQueryContractUI_t *msg, context_t *cont
     // Put it in `msg->msg`.
     return getEthAddressStringFromBinary(
         context->withdrawal_address,
-        msg->msg + 2, // +2 here because we've already prefixed with '0x'.
+        msg->msg + 2,  // +2 here because we've already prefixed with '0x'.
         msg->pluginSharedRW->sha3,
         chain_id);
 }
