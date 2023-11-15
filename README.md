@@ -89,7 +89,6 @@ yarn test
 ![](tests/snapshots/nanos_deposit/single_validator/00007.png)
 ![](tests/snapshots/nanos_deposit/single_validator/00008.png)
 
-
 ### Nano X
 
 ![](tests/snapshots/nanox_deposit/single_validator/00000.png)

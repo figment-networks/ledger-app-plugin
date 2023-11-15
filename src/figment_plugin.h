@@ -32,6 +32,7 @@ typedef enum {
 // Shared global memory with Ethereum app. Must be at most 5 * 32 bytes.
 typedef struct context_t {
     // For display.
+    uint8_t withdrawal_credentials[PARAMETER_LENGTH];
     uint8_t withdrawal_address[ADDRESS_LENGTH];
 
     // For parsing data.

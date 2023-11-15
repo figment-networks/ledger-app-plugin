@@ -19,10 +19,10 @@ const abiPath =
 const abi = require(abiPath);
 
 const withdrawalAddress =
-  "0x100000000000000000000000c146bbfede2786d56047d90b8a5805da5732c0b9";
+  "0x010000000000000000000000c146bbfede2786d56047d90b8a5805da5732c0b9";
 
 nano_models.forEach(function (model) {
-  jest.setTimeout(20000);
+  jest.setTimeout(50000);
 
   test(
     `[Nano ${model.letter}] Stake 32 ETH`,
@@ -30,6 +30,7 @@ nano_models.forEach(function (model) {
       await simulateTransaction(model, sim, eth, {
         testName: "single_validator",
         validatorsCount: 1,
+        withdrawalCredentials: withdrawalAddress,
         rightClicks: model.letter === "S" ? 7 : 5,
       });
     }),
@@ -41,7 +42,21 @@ nano_models.forEach(function (model) {
       await simulateTransaction(model, sim, eth, {
         testName: "multiple_validators",
         validatorsCount: 4,
+        withdrawalCredentials: withdrawalAddress,
         rightClicks: model.letter === "S" ? 7 : 5,
+      });
+    }),
+  );
+
+  test(
+    `[Nano ${model.letter}] Stake 32 ETH (No Withdrawal Address)`,
+    zemu(model, async (sim, eth) => {
+      await simulateTransaction(model, sim, eth, {
+        testName: "no_withdrawal_address",
+        validatorsCount: 1,
+        withdrawalCredentials:
+          "0x0000000000000000000000000000000000000000000000000000000000000000",
+        rightClicks: 4,
       });
     }),
   );
@@ -51,10 +66,13 @@ async function simulateTransaction(
   model,
   sim,
   eth,
-  { testName, validatorsCount, rightClicks },
+  { testName, validatorsCount, withdrawalCredentials, rightClicks },
 ) {
   // Prepare a transaction
-  const tx = prepareTransaction(eth, { validatorsCount });
+  const tx = prepareTransaction(eth, {
+    validatorsCount,
+    withdrawalCredentials,
+  });
 
   // Wait for the application to actually load and parse the transaction
   await waitForAppScreen(sim);
@@ -69,13 +87,16 @@ async function simulateTransaction(
   await tx;
 }
 
-async function prepareTransaction(eth, { validatorsCount = 1 }) {
+async function prepareTransaction(
+  eth,
+  { validatorsCount = 1, withdrawalCredentials = withdrawalAddress },
+) {
   const contract = new ethers.Contract(contractAddress, abi);
 
   // Signature: deposit(bytes[], bytes[], bytes[], bytes32[])
   const { data } = await contract.deposit.populateTransaction(
     Array.from({ length: validatorsCount }, () => generateRandomBytes(48)), // `pubkeys`
-    Array.from({ length: validatorsCount }, () => withdrawalAddress), // `withdrawal_credentials`
+    Array.from({ length: validatorsCount }, () => withdrawalCredentials), // `withdrawal_credentials`
     Array.from({ length: validatorsCount }, () => generateRandomBytes(96)), // `signatures`
     Array.from({ length: validatorsCount }, () => generateRandomBytes(32)), // `deposit_data_roots`
   );

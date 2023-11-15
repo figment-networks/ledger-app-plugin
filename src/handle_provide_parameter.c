@@ -41,9 +41,16 @@ static void handle_deposit(ethPluginProvideParameter_t *msg, context_t *context)
             break;
 
         case WITHDRAWAL_CREDENTIALS:
-            copy_address(context->withdrawal_address,
-                         msg->parameter,
-                         sizeof(context->withdrawal_address));
+            copy_parameter(context->withdrawal_credentials,
+                           msg->parameter,
+                           sizeof(context->withdrawal_credentials));
+
+            // Copy the withdrawal address (if present)
+            if (context->withdrawal_credentials[0] == 0x01) {
+                copy_address(context->withdrawal_address,
+                             msg->parameter,
+                             sizeof(context->withdrawal_address));
+            }
 
             context->next_param = IGNORED_PARAMETERS;
             break;
