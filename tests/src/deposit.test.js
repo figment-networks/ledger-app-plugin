@@ -7,7 +7,7 @@ import {
   waitForAppScreen,
   zemu,
   genericTx,
-  nano_models,
+  nanoModels,
   generateRandomBytes,
 } from "./test.fixture";
 
@@ -21,7 +21,7 @@ const abi = require(abiPath);
 const withdrawalAddress =
   "0x010000000000000000000000c146bbfede2786d56047d90b8a5805da5732c0b9";
 
-nano_models.forEach(function (model) {
+nanoModels.forEach(function (model) {
   jest.setTimeout(50000);
 
   test(
