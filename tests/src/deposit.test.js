@@ -69,12 +69,14 @@ nano_models.forEach(function (model) {
       // Wait for the application to actually load and parse the transaction
       await waitForAppScreen(sim);
 
-      // Navigate the display by pressing the right button 5 times, then pressing both buttons to accept the transaction.
-      const rightClicks = 5;
-      await sim.navigateAndCompareSnapshots(".", model.name + "_deposit/single_validator", [
-        rightClicks,
-        0,
-      ]);
+      const rightClicks = model.letter === "S" ? 7 : 5;
+
+      // Navigate the display by pressing the right button `rightClicks` times, then pressing both buttons to accept the transaction.
+      await sim.navigateAndCompareSnapshots(
+        ".",
+        model.name + "_deposit/single_validator",
+        [rightClicks, 0],
+      );
 
       await tx;
     }),
@@ -89,12 +91,14 @@ nano_models.forEach(function (model) {
       // Wait for the application to actually load and parse the transaction
       await waitForAppScreen(sim);
 
-      // Navigate the display by pressing the right button 5 times, then pressing both buttons to accept the transaction.
-      const rightClicks = 5;
-      await sim.navigateAndCompareSnapshots(".", model.name + "_deposit/multiple_validators", [
-        rightClicks,
-        0,
-      ]);
+      const rightClicks = model.letter === "S" ? 7 : 5;
+
+      // Navigate the display by pressing the right button `rightClicks` times, then pressing both buttons to accept the transaction.
+      await sim.navigateAndCompareSnapshots(
+        ".",
+        model.name + "_deposit/multiple_validators",
+        [rightClicks, 0],
+      );
 
       await tx;
     }),
