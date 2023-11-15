@@ -21,7 +21,7 @@ static bool set_amount_ui(ethQueryContractUI_t *msg) {
 
 // Set UI for the "Withdrawal Address" screen.
 static bool set_withdrawal_address_ui(ethQueryContractUI_t *msg, context_t *context) {
-    set_screen_title(msg, "Withdrawal Address");
+    set_screen_title(msg, "Withdrawal Addr.");
 
     // Prefix the address with `0x`.
     msg->msg[0] = '0';
