@@ -1,3 +1,4 @@
+import crypto from "crypto";
 import Zemu, { DEFAULT_START_OPTIONS, DeviceModel } from "@zondax/zemu";
 import Eth from "@ledgerhq/hw-app-eth";
 import { generate_plugin_config } from "./generate_plugin_config";
@@ -10,6 +11,10 @@ async function waitForAppScreen(sim) {
     sim.getMainMenuSnapshot(),
     transactionUploadDelay,
   );
+}
+
+function generateRandomBytes(size: number): string {
+  return "0x" + crypto.randomBytes(size).toString("hex");
 }
 
 const sim_options_nano = {
@@ -129,4 +134,5 @@ module.exports = {
   SPECULOS_ADDRESS,
   RANDOM_ADDRESS,
   txFromEtherscan,
+  generateRandomBytes,
 };
