@@ -27,32 +27,24 @@ const simOptionsNano = {
 
 const Resolve = require("path").resolve;
 
-const NANOS_ETH_PATH = Resolve("elfs/ethereum_nanos.elf");
-const NANOSP_ETH_PATH = Resolve("elfs/ethereum_nanosp.elf");
-const NANOX_ETH_PATH = Resolve("elfs/ethereum_nanox.elf");
-
-const NANOS_PLUGIN_PATH = Resolve("elfs/plugin_nanos.elf");
-const NANOSP_PLUGIN_PATH = Resolve("elfs/plugin_nanosp.elf");
-const NANOX_PLUGIN_PATH = Resolve("elfs/plugin_nanox.elf");
-
 const nanoModels = [
   {
     name: "nanos",
     letter: "S",
-    path: NANOS_PLUGIN_PATH,
-    ethPath: NANOS_ETH_PATH,
+    path: Resolve("elfs/plugin_nanos.elf"),
+    ethPath: Resolve("elfs/ethereum_nanos.elf"),
   },
   {
     name: "nanosp",
     letter: "SP",
-    path: NANOSP_PLUGIN_PATH,
-    ethPath: NANOSP_ETH_PATH,
+    path: Resolve("elfs/plugin_nanosp.elf"),
+    ethPath: Resolve("elfs/ethereum_nanosp.elf"),
   },
   {
     name: "nanox",
     letter: "X",
-    path: NANOX_PLUGIN_PATH,
-    ethPath: NANOX_ETH_PATH,
+    path: Resolve("elfs/plugin_nanox.elf"),
+    ethPath: Resolve("elfs/ethereum_nanox.elf"),
   },
 ];
 

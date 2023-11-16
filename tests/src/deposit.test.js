@@ -94,7 +94,7 @@ async function simulateTransaction(
   model,
   sim,
   eth,
-  { testName, validatorsCount, withdrawalCredentials, rightClicks },
+  { testName, validatorsCount, withdrawalCredentials, rightClicks = 0 },
 ) {
   // Prepare a transaction
   const tx = prepareTransaction(eth, {
@@ -125,12 +125,12 @@ async function prepareTransaction(
     ? withdrawalCredentials
     : Array.from({ length: validatorsCount }, () => withdrawalCredentials);
 
-  // Signature: deposit(bytes[], bytes[], bytes[], bytes32[])
+  // Signature: deposit(bytes[] pubkeys, bytes[] withdrawal_credentials, bytes[] signatures, bytes32[] deposit_data_roots)
   const { data } = await contract.deposit.populateTransaction(
-    Array.from({ length: validatorsCount }, () => generateRandomBytes(48)), // `pubkeys`
-    withdrawalCredentialsArray, // `withdrawal_credentials`
-    Array.from({ length: validatorsCount }, () => generateRandomBytes(96)), // `signatures`
-    Array.from({ length: validatorsCount }, () => generateRandomBytes(32)), // `deposit_data_roots`
+    Array.from({ length: validatorsCount }, () => generateRandomBytes(48)),
+    withdrawalCredentialsArray,
+    Array.from({ length: validatorsCount }, () => generateRandomBytes(96)),
+    Array.from({ length: validatorsCount }, () => generateRandomBytes(32)),
   );
 
   // Get the generic transaction template
