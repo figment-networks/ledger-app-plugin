@@ -42,7 +42,7 @@ static void handle_deposit(ethPluginProvideParameter_t *msg, context_t *context)
             break;
 
         case WITHDRAWAL_CREDENTIALS_LENGTH:
-            if (U2BE(msg->parameter, PARAMETER_LENGTH - sizeof(uint16_t)) != PARAMETER_LENGTH) {
+            if (U2BE(msg->parameter, PARAMETER_LENGTH - sizeof(uint16_t)) != 32) {
                 PRINTF("Invalid withdrawal credentials length\n");
                 msg->result = ETH_PLUGIN_RESULT_ERROR;
                 break;
