@@ -20,7 +20,7 @@ const abiPath =
 const abi = require(abiPath);
 
 const withdrawalAddress =
-  "0x010000000000000000000000" + SPECULOS_ADDRESS.toLowerCase().slice(2);
+  "0x010000000000000000000000" + SPECULOS_ADDRESS.slice(2).toLowerCase();
 const externalWithdrawalAddress =
   "0x010000000000000000000000c146bbfede2786d56047d90b8a5805da5732c0b9";
 const blsCredentials =

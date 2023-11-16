@@ -23,10 +23,10 @@ static void handle_deposit(ethPluginProvideParameter_t *msg, context_t *context)
                 SELECTOR_SIZE + U2BE(msg->parameter, PARAMETER_LENGTH - sizeof(context->offset));
 
             context->go_to_offset = true;
-            context->next_param = WITHDRAWAL_CREDENTIALS_ARRAY_SIZE;
+            context->next_param = WITHDRAWAL_CREDENTIALS_ARRAY_LENGTH;
             break;
 
-        case WITHDRAWAL_CREDENTIALS_ARRAY_SIZE:
+        case WITHDRAWAL_CREDENTIALS_ARRAY_LENGTH:
             context->validators_count =
                 U2BE(msg->parameter, PARAMETER_LENGTH - sizeof(context->validators_count));
 
@@ -38,11 +38,16 @@ static void handle_deposit(ethPluginProvideParameter_t *msg, context_t *context)
                               U2BE(msg->parameter, PARAMETER_LENGTH - sizeof(context->offset));
 
             context->go_to_offset = true;
-            context->next_param = WITHDRAWAL_CREDENTIALS_SIZE;
+            context->next_param = WITHDRAWAL_CREDENTIALS_LENGTH;
             break;
 
-        case WITHDRAWAL_CREDENTIALS_SIZE:
-            // Skip the parameter
+        case WITHDRAWAL_CREDENTIALS_LENGTH:
+            if (U2BE(msg->parameter, PARAMETER_LENGTH - sizeof(uint16_t)) != PARAMETER_LENGTH) {
+                PRINTF("Invalid withdrawal credentials length\n");
+                msg->result = ETH_PLUGIN_RESULT_ERROR;
+                break;
+            }
+
             context->next_param = WITHDRAWAL_CREDENTIALS;
             break;
 
@@ -63,7 +68,7 @@ static void handle_deposit(ethPluginProvideParameter_t *msg, context_t *context)
             context->validators_count--;
 
             if (context->validators_count != 0) {
-                context->next_param = WITHDRAWAL_CREDENTIALS_SIZE;
+                context->next_param = WITHDRAWAL_CREDENTIALS_LENGTH;
             } else {
                 context->next_param = REMAINING_PARAMETERS;
             }
