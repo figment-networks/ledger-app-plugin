@@ -1,5 +1,9 @@
 #include "figment_plugin.h"
 
+static bool withdrawal_credentials_match(ethPluginProvideParameter_t *msg, context_t *context) {
+    return memcmp(context->withdrawal_credentials, msg->parameter, PARAMETER_LENGTH) == 0;
+}
+
 static void handle_deposit(ethPluginProvideParameter_t *msg, context_t *context) {
     if (context->go_to_offset) {
         if (msg->parameterOffset != context->offset) {
@@ -9,7 +13,7 @@ static void handle_deposit(ethPluginProvideParameter_t *msg, context_t *context)
     }
 
     switch (context->next_param) {
-        case VALIDATOR_PUBKEYS_ARRAY:
+        case PUBKEYS_ARRAY:
             // Skip the parameter
             context->next_param = WITHDRAWAL_CREDENTIALS_ARRAY;
             break;
@@ -23,7 +27,9 @@ static void handle_deposit(ethPluginProvideParameter_t *msg, context_t *context)
             break;
 
         case WITHDRAWAL_CREDENTIALS_ARRAY_SIZE:
-            // Skip the parameter
+            context->validators_count =
+                U2BE(msg->parameter, PARAMETER_LENGTH - sizeof(context->validators_count));
+
             context->next_param = WITHDRAWAL_CREDENTIALS_OFFSET;
             break;
 
@@ -41,22 +47,30 @@ static void handle_deposit(ethPluginProvideParameter_t *msg, context_t *context)
             break;
 
         case WITHDRAWAL_CREDENTIALS:
-            copy_parameter(context->withdrawal_credentials,
-                           msg->parameter,
-                           sizeof(context->withdrawal_credentials));
+            // Store the first withdrawal credentials
+            if (!context->withdrawal_credentials_stored) {
+                copy_parameter(context->withdrawal_credentials,
+                               msg->parameter,
+                               sizeof(context->withdrawal_credentials));
 
-            // Copy the withdrawal address (if present)
-            if (context->withdrawal_credentials[0] == 0x01) {
-                copy_address(context->withdrawal_address,
-                             msg->parameter,
-                             sizeof(context->withdrawal_address));
+                context->withdrawal_credentials_stored = true;
+            }
+            // Check if other withdrawal credentials match the first one
+            else if (!withdrawal_credentials_match(msg, context)) {
+                context->withdrawal_credentials_differ = true;
             }
 
-            context->next_param = IGNORED_PARAMETERS;
+            context->validators_count--;
+
+            if (context->validators_count != 0) {
+                context->next_param = WITHDRAWAL_CREDENTIALS_SIZE;
+            } else {
+                context->next_param = REMAINING_PARAMETERS;
+            }
             break;
 
-        case IGNORED_PARAMETERS:
-            // Skip ignored parameters
+        case REMAINING_PARAMETERS:
+            // Skip the remaining parameters
             break;
 
         default:

@@ -10,6 +10,9 @@
 // Name of the plugin.
 #define PLUGIN_NAME "Figment"
 
+// Type 1 withdrawal credentials prefix
+#define ETH1_ADDRESS_WITHDRAWAL_PREFIX 0x01
+
 // Enumeration of the different selectors possible.
 // Should follow the exact same order as the array declared in main.c
 typedef enum {
@@ -20,28 +23,30 @@ extern const uint32_t FIGMENT_SELECTORS[NUM_SELECTORS];
 
 // Enumeration used to parse the smart contract data.
 typedef enum {
-    VALIDATOR_PUBKEYS_ARRAY = 0,
+    PUBKEYS_ARRAY = 0,
     WITHDRAWAL_CREDENTIALS_ARRAY,
     WITHDRAWAL_CREDENTIALS_ARRAY_SIZE,
     WITHDRAWAL_CREDENTIALS_OFFSET,
     WITHDRAWAL_CREDENTIALS_SIZE,
     WITHDRAWAL_CREDENTIALS,
-    IGNORED_PARAMETERS,
+    REMAINING_PARAMETERS,
 } parameter;
 
 // Shared global memory with Ethereum app. Must be at most 5 * 32 bytes.
 typedef struct context_t {
-    // For display.
+    uint16_t validators_count;
+
     uint8_t withdrawal_credentials[PARAMETER_LENGTH];
+    bool withdrawal_credentials_stored;
+    bool withdrawal_credentials_differ;
+
     uint8_t withdrawal_address[ADDRESS_LENGTH];
 
-    // For parsing data.
     uint8_t next_param;  // Set to be the next param we expect to parse.
     uint16_t offset;     // Offset at which the array or struct starts.
     bool go_to_offset;   // If set, will force the parsing to iterate through parameters until
                          // `offset` is reached.
 
-    // For both parsing and display.
     selector_t selectorIndex;
 } context_t;
 

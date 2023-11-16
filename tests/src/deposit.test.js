@@ -8,6 +8,7 @@ import {
   zemu,
   genericTx,
   nanoModels,
+  SPECULOS_ADDRESS,
   generateRandomBytes,
 } from "./test.fixture";
 
@@ -19,44 +20,71 @@ const abiPath =
 const abi = require(abiPath);
 
 const withdrawalAddress =
+  "0x010000000000000000000000" + SPECULOS_ADDRESS.toLowerCase().slice(2);
+const externalWithdrawalAddress =
   "0x010000000000000000000000c146bbfede2786d56047d90b8a5805da5732c0b9";
+const blsCredentials =
+  "0x00a9e22781d152844f5a8d6d7b30c06e8504f48cdb389ba63eaf85fa0710be92";
 
 nanoModels.forEach(function (model) {
-  jest.setTimeout(50000);
+  jest.setTimeout(20000);
 
   test(
-    `[Nano ${model.letter}] Stake 32 ETH`,
+    `[Nano ${model.letter}] Deposit to a single validator`,
     zemu(model, async (sim, eth) => {
       await simulateTransaction(model, sim, eth, {
         testName: "single_validator",
         validatorsCount: 1,
         withdrawalCredentials: withdrawalAddress,
-        rightClicks: model.letter === "S" ? 7 : 5,
+        rightClicks: 4,
       });
     }),
   );
 
   test(
-    `[Nano ${model.letter}] Stake 128 ETH`,
+    `[Nano ${model.letter}] Deposit to multiple validators`,
     zemu(model, async (sim, eth) => {
       await simulateTransaction(model, sim, eth, {
         testName: "multiple_validators",
         validatorsCount: 4,
         withdrawalCredentials: withdrawalAddress,
+        rightClicks: 4,
+      });
+    }),
+  );
+
+  test(
+    `[Nano ${model.letter}] Deposit with an external withdrawal address`,
+    zemu(model, async (sim, eth) => {
+      await simulateTransaction(model, sim, eth, {
+        testName: "external_withdrawal_address",
+        validatorsCount: 1,
+        withdrawalCredentials: externalWithdrawalAddress,
         rightClicks: model.letter === "S" ? 7 : 5,
       });
     }),
   );
 
   test(
-    `[Nano ${model.letter}] Stake 32 ETH (No Withdrawal Address)`,
+    `[Nano ${model.letter}] Deposit with differing withdrawal credentials`,
     zemu(model, async (sim, eth) => {
       await simulateTransaction(model, sim, eth, {
-        testName: "no_withdrawal_address",
+        testName: "differing_withdrawal_addresses",
+        validatorsCount: 2,
+        withdrawalCredentials: [withdrawalAddress, blsCredentials],
+        rightClicks: model.letter === "S" ? 7 : 5,
+      });
+    }),
+  );
+
+  test(
+    `[Nano ${model.letter}] Deposit with BLS credentials`,
+    zemu(model, async (sim, eth) => {
+      await simulateTransaction(model, sim, eth, {
+        testName: "bls_credentials",
         validatorsCount: 1,
-        withdrawalCredentials:
-          "0x0000000000000000000000000000000000000000000000000000000000000000",
-        rightClicks: 4,
+        withdrawalCredentials: blsCredentials,
+        rightClicks: model.letter === "S" ? 7 : 5,
       });
     }),
   );
@@ -93,10 +121,14 @@ async function prepareTransaction(
 ) {
   const contract = new ethers.Contract(contractAddress, abi);
 
+  const withdrawalCredentialsArray = Array.isArray(withdrawalCredentials)
+    ? withdrawalCredentials
+    : Array.from({ length: validatorsCount }, () => withdrawalCredentials);
+
   // Signature: deposit(bytes[], bytes[], bytes[], bytes32[])
   const { data } = await contract.deposit.populateTransaction(
     Array.from({ length: validatorsCount }, () => generateRandomBytes(48)), // `pubkeys`
-    Array.from({ length: validatorsCount }, () => withdrawalCredentials), // `withdrawal_credentials`
+    withdrawalCredentialsArray, // `withdrawal_credentials`
     Array.from({ length: validatorsCount }, () => generateRandomBytes(96)), // `signatures`
     Array.from({ length: validatorsCount }, () => generateRandomBytes(32)), // `deposit_data_roots`
   );

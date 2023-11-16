@@ -85,9 +85,6 @@ yarn test
 ![](tests/snapshots/nanos_deposit/single_validator/00003.png)
 ![](tests/snapshots/nanos_deposit/single_validator/00004.png)
 ![](tests/snapshots/nanos_deposit/single_validator/00005.png)
-![](tests/snapshots/nanos_deposit/single_validator/00006.png)
-![](tests/snapshots/nanos_deposit/single_validator/00007.png)
-![](tests/snapshots/nanos_deposit/single_validator/00008.png)
 
 ### Nano X
 
@@ -97,4 +94,3 @@ yarn test
 ![](tests/snapshots/nanox_deposit/single_validator/00003.png)
 ![](tests/snapshots/nanox_deposit/single_validator/00004.png)
 ![](tests/snapshots/nanox_deposit/single_validator/00005.png)
-![](tests/snapshots/nanox_deposit/single_validator/00006.png)
