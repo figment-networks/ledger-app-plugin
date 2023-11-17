@@ -36,7 +36,7 @@ nanoModels.forEach(function (model) {
         testName: "single_validator",
         validatorsCount: 1,
         withdrawalCredentials: withdrawalAddress,
-        rightClicks: 4,
+        rightClicks: 5,
       });
     }),
   );
@@ -48,7 +48,7 @@ nanoModels.forEach(function (model) {
         testName: "multiple_validators",
         validatorsCount: 4,
         withdrawalCredentials: withdrawalAddress,
-        rightClicks: 4,
+        rightClicks: 5,
       });
     }),
   );
@@ -60,7 +60,7 @@ nanoModels.forEach(function (model) {
         testName: "external_withdrawal_address",
         validatorsCount: 1,
         withdrawalCredentials: externalWithdrawalAddress,
-        rightClicks: model.letter === "S" ? 7 : 5,
+        rightClicks: model.letter === "S" ? 8 : 6,
       });
     }),
   );
@@ -72,7 +72,7 @@ nanoModels.forEach(function (model) {
         testName: "differing_withdrawal_addresses",
         validatorsCount: 2,
         withdrawalCredentials: [withdrawalAddress, blsCredentials],
-        rightClicks: model.letter === "S" ? 7 : 5,
+        rightClicks: model.letter === "S" ? 8 : 6,
       });
     }),
   );
@@ -84,7 +84,7 @@ nanoModels.forEach(function (model) {
         testName: "bls_credentials",
         validatorsCount: 1,
         withdrawalCredentials: blsCredentials,
-        rightClicks: model.letter === "S" ? 7 : 5,
+        rightClicks: model.letter === "S" ? 8 : 6,
       });
     }),
   );

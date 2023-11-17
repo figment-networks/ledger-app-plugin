@@ -29,6 +29,14 @@ static bool set_amount_ui(ethQueryContractUI_t *msg) {
                           msg->msgLength);
 }
 
+// Set UI for the "Version" screen.
+static bool set_version_ui(ethQueryContractUI_t *msg) {
+    set_screen_title(msg, "Version");
+    set_screen_message(msg, "FIGAPP-1260");
+
+    return true;
+}
+
 // Set UI for the "Withdrawal Address Warning" screen.
 static bool set_withdrawal_address_warning_ui(ethQueryContractUI_t *msg) {
     set_screen_title(msg, "WARNING");
@@ -52,6 +60,10 @@ void handle_query_contract_ui(void *parameters) {
             break;
 
         case 1:
+            result = set_version_ui(msg);
+            break;
+
+        case 2:
             result = set_withdrawal_address_warning_ui(msg);
             break;
 

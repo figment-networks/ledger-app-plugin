@@ -11,7 +11,7 @@ void handle_finalize(void *parameters) {
     context_t *context = (context_t *) msg->pluginContext;
 
     msg->uiType = ETH_UI_TYPE_GENERIC;
-    msg->numScreens = 1;
+    msg->numScreens = 2;
 
     // Copy the withdrawal address (if present)
     if (context->withdrawal_credentials[0] == ETH1_ADDRESS_WITHDRAWAL_PREFIX) {
