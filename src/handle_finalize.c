@@ -9,8 +9,7 @@ static bool withdrawal_address_matches_sender(ethPluginFinalize_t *msg) {
     return memcmp(context->withdrawal_address, msg->address, ADDRESS_LENGTH) == 0;
 }
 
-void handle_finalize(void *parameters) {
-    ethPluginFinalize_t *msg = (ethPluginFinalize_t *) parameters;
+void handle_finalize(ethPluginFinalize_t *msg) {
     context_t *context = (context_t *) msg->pluginContext;
 
     msg->uiType = ETH_UI_TYPE_GENERIC;
