@@ -1,4 +1,4 @@
-#include "figment_plugin.h"
+#include "plugin.h"
 
 static bool withdrawal_credentials_match(ethPluginProvideParameter_t *msg, context_t *context) {
     return memcmp(context->withdrawal_credentials, msg->parameter, PARAMETER_LENGTH) == 0;
@@ -85,9 +85,9 @@ static void handle_deposit(ethPluginProvideParameter_t *msg, context_t *context)
     }
 }
 
-void handle_provide_parameter(void *parameters) {
-    ethPluginProvideParameter_t *msg = (ethPluginProvideParameter_t *) parameters;
+void handle_provide_parameter(ethPluginProvideParameter_t *msg) {
     context_t *context = (context_t *) msg->pluginContext;
+
     // We use `%.*H`: it's a utility function to print bytes. You first give
     // the number of bytes you wish to print (in this case, `PARAMETER_LENGTH`) and then
     // the address (here `msg->parameter`).
