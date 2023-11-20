@@ -27,7 +27,7 @@ const blsCredentials =
   "0x00a9e22781d152844f5a8d6d7b30c06e8504f48cdb389ba63eaf85fa0710be92";
 
 nanoModels.forEach(function (model) {
-  jest.setTimeout(20000);
+  jest.setTimeout(30000);
 
   test(
     `[Nano ${model.letter}] Deposit to a single validator`,

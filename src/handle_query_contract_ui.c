@@ -31,7 +31,7 @@ static bool set_amount_ui(ethQueryContractUI_t *msg) {
 
 // Set UI for the "Withdrawal Address Warning" screen.
 static bool set_withdrawal_address_warning_ui(ethQueryContractUI_t *msg) {
-    set_screen_title(msg, "WARNING");
+    set_screen_title(msg, "Funds at risk");
     set_screen_message(msg, "Withdrawal address does not match your wallet address.");
 
     return true;
