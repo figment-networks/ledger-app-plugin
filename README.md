@@ -79,19 +79,18 @@ yarn test
 
 ### Nano S
 
-![](tests/snapshots/nanos_deposit/00000.png)
-![](tests/snapshots/nanos_deposit/00001.png)
-![](tests/snapshots/nanos_deposit/00002.png)
-![](tests/snapshots/nanos_deposit/00003.png)
-![](tests/snapshots/nanos_deposit/00004.png)
-![](tests/snapshots/nanos_deposit/00005.png)
-
+![](tests/snapshots/nanos_deposit/single_validator/00000.png)
+![](tests/snapshots/nanos_deposit/single_validator/00001.png)
+![](tests/snapshots/nanos_deposit/single_validator/00002.png)
+![](tests/snapshots/nanos_deposit/single_validator/00003.png)
+![](tests/snapshots/nanos_deposit/single_validator/00004.png)
+![](tests/snapshots/nanos_deposit/single_validator/00005.png)
 
 ### Nano X
 
-![](tests/snapshots/nanox_deposit/00000.png)
-![](tests/snapshots/nanox_deposit/00001.png)
-![](tests/snapshots/nanox_deposit/00002.png)
-![](tests/snapshots/nanox_deposit/00003.png)
-![](tests/snapshots/nanox_deposit/00004.png)
-![](tests/snapshots/nanox_deposit/00005.png)
+![](tests/snapshots/nanox_deposit/single_validator/00000.png)
+![](tests/snapshots/nanox_deposit/single_validator/00001.png)
+![](tests/snapshots/nanox_deposit/single_validator/00002.png)
+![](tests/snapshots/nanox_deposit/single_validator/00003.png)
+![](tests/snapshots/nanox_deposit/single_validator/00004.png)
+![](tests/snapshots/nanox_deposit/single_validator/00005.png)
