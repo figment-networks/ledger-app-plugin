@@ -1877,7 +1877,7 @@
     react "^18.2.0"
     react-dom "^18.2.0"
 
-"@ledgerhq/errors@^6.14.0", "@ledgerhq/errors@^6.15.0":
+"@ledgerhq/errors@^6.15.0":
   version "6.15.0"
   resolved "https://registry.yarnpkg.com/@ledgerhq/errors/-/errors-6.15.0.tgz#45cda73915f695cc072cb8a99650830bc5dc6668"
   integrity sha512-6xaw5/mgoht62TnL3rXsaQYEFwpnXyNDk1AOSJksIjFHx9bHUnkyVmrnGQDj0JLzi+E7bHEgTrpCs8wpeDh9jA==
@@ -1911,14 +1911,14 @@
     axios "^1.3.4"
     bignumber.js "^9.1.2"
 
-"@ledgerhq/hw-transport-http@^6.28.0", "@ledgerhq/hw-transport-http@^6.28.3":
-  version "6.28.3"
-  resolved "https://registry.yarnpkg.com/@ledgerhq/hw-transport-http/-/hw-transport-http-6.28.3.tgz#829a0d006094edadec47c8673319f539f5aae393"
-  integrity sha512-Z+zzK3v+rs/j9V2fc1uDJ38wBviziyU2sSSSHy0F2VnOhdEuE9i82hYsRniwi3c+pi9LThZP9kQrHOyeAnTaow==
+"@ledgerhq/hw-transport-http@^6.28.3", "@ledgerhq/hw-transport-http@^6.28.4":
+  version "6.28.4"
+  resolved "https://registry.yarnpkg.com/@ledgerhq/hw-transport-http/-/hw-transport-http-6.28.4.tgz#c5b0b314ca1079b77ddedb4e191c601e5ff0be2e"
+  integrity sha512-ooKIJEGzv/tPUb4BW+nEvmbNK+HFxEZsFMMLllVD2dwHe/zy/x8x13LHzD7KHg0Il71drD6BUJxvmcLaaK7UuQ==
   dependencies:
-    "@ledgerhq/errors" "^6.14.0"
-    "@ledgerhq/hw-transport" "^6.28.8"
-    "@ledgerhq/logs" "^6.10.1"
+    "@ledgerhq/errors" "^6.15.0"
+    "@ledgerhq/hw-transport" "^6.29.0"
+    "@ledgerhq/logs" "^6.11.0"
     axios "^0.26.1"
     ws "^7.5.2"
 
@@ -1931,7 +1931,7 @@
     "@ledgerhq/logs" "^6.11.0"
     rxjs "^7.8.1"
 
-"@ledgerhq/hw-transport@^6.28.8", "@ledgerhq/hw-transport@^6.29.0":
+"@ledgerhq/hw-transport@^6.29.0":
   version "6.29.0"
   resolved "https://registry.yarnpkg.com/@ledgerhq/hw-transport/-/hw-transport-6.29.0.tgz#2b85f39d90b093930f0c7bfc513b29eb47ba97fa"
   integrity sha512-WQfzxt3EnnbOmzZVYiCgSmNsqafBOFQn40awvUPY2IZviJRs23/1ANPHAo76bzPV88+Qk0+1wZlcnIanGN6fFA==
@@ -1969,7 +1969,7 @@
   dependencies:
     "@ledgerhq/logs" "^6.11.0"
 
-"@ledgerhq/logs@^6.10.1", "@ledgerhq/logs@^6.11.0", "@ledgerhq/logs@^6.2.0":
+"@ledgerhq/logs@^6.11.0", "@ledgerhq/logs@^6.2.0":
   version "6.11.0"
   resolved "https://registry.yarnpkg.com/@ledgerhq/logs/-/logs-6.11.0.tgz#0d28e7edcf71548506f4304686cba480ba91bbcf"
   integrity sha512-HHK9y4GGe4X7CXbRUCh7z8Mp+WggpJn1dmUjmuk1rNugESF6o8nAOnXA+BxwtRRNV3CgNJR3Wxdos4J9qV0Zsg==
