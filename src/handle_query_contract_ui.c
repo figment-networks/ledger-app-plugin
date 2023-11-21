@@ -1,4 +1,4 @@
-#include "figment_plugin.h"
+#include "plugin.h"
 
 static void set_screen_title(ethQueryContractUI_t *msg, const char *title) {
     if (strlcpy(msg->title, title, msg->titleLength) < strlen(title)) {
@@ -37,14 +37,12 @@ static bool set_withdrawal_address_warning_ui(ethQueryContractUI_t *msg) {
     return true;
 }
 
-void handle_query_contract_ui(void *parameters) {
-    ethQueryContractUI_t *msg = (ethQueryContractUI_t *) parameters;
+void handle_query_contract_ui(ethQueryContractUI_t *msg) {
+    bool result = false;
 
     // Clean the display fields.
     memset(msg->title, 0, msg->titleLength);
     memset(msg->msg, 0, msg->msgLength);
-
-    bool result = false;
 
     switch (msg->screenIndex) {
         case 0:
