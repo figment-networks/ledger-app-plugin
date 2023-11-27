@@ -3,6 +3,11 @@
 
 // Called once to init.
 void handle_init_contract(ethPluginInitContract_t *msg) {
+    if (msg == NULL) {
+        PRINTF("handle_init_contract: msg is NULL\n");
+        return;
+    }
+
     // Make sure we are running a compatible version.
     if (msg->interfaceVersion != ETH_PLUGIN_INTERFACE_VERSION_LATEST) {
         // If not the case, return the `UNAVAILABLE` status.

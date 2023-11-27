@@ -86,6 +86,11 @@ static void handle_deposit(ethPluginProvideParameter_t *msg, context_t *context)
 }
 
 void handle_provide_parameter(ethPluginProvideParameter_t *msg) {
+    if (msg == NULL) {
+        PRINTF("handle_provide_parameter: msg is NULL\n");
+        return;
+    }
+
     context_t *context = (context_t *) msg->pluginContext;
 
     // We use `%.*H`: it's a utility function to print bytes. You first give

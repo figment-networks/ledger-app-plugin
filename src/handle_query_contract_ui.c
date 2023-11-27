@@ -38,6 +38,11 @@ static bool set_withdrawal_address_warning_ui(ethQueryContractUI_t *msg) {
 }
 
 void handle_query_contract_ui(ethQueryContractUI_t *msg) {
+    if (msg == NULL) {
+        PRINTF("handle_query_contract_ui: msg is NULL\n");
+        return;
+    }
+
     bool result = false;
 
     // Clean the display fields.

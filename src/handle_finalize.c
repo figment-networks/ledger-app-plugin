@@ -10,6 +10,11 @@ static bool withdrawal_address_matches_sender(ethPluginFinalize_t *msg) {
 }
 
 void handle_finalize(ethPluginFinalize_t *msg) {
+    if (msg == NULL) {
+        PRINTF("handle_finalize: msg is NULL\n");
+        return;
+    }
+
     context_t *context = (context_t *) msg->pluginContext;
 
     msg->uiType = ETH_UI_TYPE_GENERIC;
