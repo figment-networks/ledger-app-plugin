@@ -2,6 +2,11 @@
 
 // Sets the first screen to display.
 void handle_query_contract_id(ethQueryContractID_t *msg) {
+    if (msg == NULL) {
+        PRINTF("handle_query_contract_id: msg is NULL\n");
+        return;
+    }
+
     const context_t *context = (const context_t *) msg->pluginContext;
 
     // For the first screen, display the plugin name.
