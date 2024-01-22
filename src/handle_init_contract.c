@@ -1,4 +1,5 @@
 #include "plugin.h"
+#include "plugin_utils.h"
 
 // Called once to init.
 void handle_init_contract(ethPluginInitContract_t *msg) {
