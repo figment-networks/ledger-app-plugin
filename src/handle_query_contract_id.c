@@ -1,7 +1,8 @@
 #include "figment_plugin.h"
 
 // Sets the first screen to display.
-void handle_query_contract_id(ethQueryContractID_t *msg) {
+void handle_query_contract_id(void *parameters) {
+    ethQueryContractID_t *msg = (ethQueryContractID_t *) parameters;
     const context_t *context = (const context_t *) msg->pluginContext;
     // msg->name will be the upper sentence displayed on the screen.
     // msg->version will be the lower sentence displayed on the screen.

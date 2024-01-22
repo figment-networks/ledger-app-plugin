@@ -1,8 +1,7 @@
-#include <stdbool.h>
 #include "figment_plugin.h"
 
 // Set UI for the "Amount" screen.
-static bool set_amount_ui(ethQueryContractUI_t *msg) {
+static void set_amount_ui(ethQueryContractUI_t *msg) {
     const char *title = "Amount";
 
     if (strlcpy(msg->title, title, msg->titleLength) < strlen(title)) {
@@ -14,16 +13,11 @@ static bool set_amount_ui(ethQueryContractUI_t *msg) {
 
     // Converts the uint256 number located in `eth_amount` to its string representation and
     // copies this to `msg->msg`.
-    return amountToString(eth_amount,
-                          eth_amount_size,
-                          WEI_TO_ETHER,
-                          "ETH",
-                          msg->msg,
-                          msg->msgLength);
+    amountToString(eth_amount, eth_amount_size, WEI_TO_ETHER, "ETH", msg->msg, msg->msgLength);
 }
 
-void handle_query_contract_ui(ethQueryContractUI_t *msg) {
-    bool ret = false;
+void handle_query_contract_ui(void *parameters) {
+    ethQueryContractUI_t *msg = (ethQueryContractUI_t *) parameters;
 
     // msg->title is the upper line displayed on the device.
     // msg->msg is the lower line displayed on the device.
@@ -32,15 +26,17 @@ void handle_query_contract_ui(ethQueryContractUI_t *msg) {
     memset(msg->title, 0, msg->titleLength);
     memset(msg->msg, 0, msg->msgLength);
 
+    msg->result = ETH_PLUGIN_RESULT_OK;
+
     switch (msg->screenIndex) {
         case 0:
-            ret = set_amount_ui(msg);
+            set_amount_ui(msg);
             break;
 
         // Keep this
         default:
             PRINTF("Received an invalid screenIndex\n");
-            break;
+            msg->result = ETH_PLUGIN_RESULT_ERROR;
+            return;
     }
-    msg->result = ret ? ETH_PLUGIN_RESULT_OK : ETH_PLUGIN_RESULT_ERROR;
 }
