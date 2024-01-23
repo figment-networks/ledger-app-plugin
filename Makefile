@@ -31,7 +31,7 @@ APPNAME = "Figment"
 # Application version
 APPVERSION_M = 1
 APPVERSION_N = 0
-APPVERSION_P = 0
+APPVERSION_P = 1
 APPVERSION = "$(APPVERSION_M).$(APPVERSION_N).$(APPVERSION_P)"
 
 # Initialize plugin SDK submodule if needed
@@ -82,7 +82,7 @@ PATH_APP_LOAD_PARAMS = "44'/60'"   # purpose=coin(44) / coin_type=Testnet(1)
 #   * It must at least contains one value.
 #   * Values can be the app ticker or anything else but should be unique.
 VARIANT_PARAM = COIN
-VARIANT_VALUES = pbol
+VARIANT_VALUES = figment
 
 # Enabling DEBUG flag will enable PRINTF and disable optimizations
 #DEBUG = 1
