@@ -4,7 +4,7 @@ sdk = "C"
 devices = ["nanos", "nanox", "nanos+", "stax"]
 
 [use_cases]
-debug = "DEBUG=0"
+debug = "DEBUG=1"
 
 [tests]
 unit_directory = "./tests/"
