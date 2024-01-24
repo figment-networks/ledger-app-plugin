@@ -3,5 +3,8 @@ build_directory = "./"
 sdk = "C"
 devices = ["nanos", "nanox", "nanos+", "stax"]
 
+[use_cases]
+debug = "DEBUG=0"
+
 [tests]
 unit_directory = "./tests/"
