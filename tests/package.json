@@ -20,7 +20,7 @@
     "core-js": "^3.35.1",
     "eslint": "^8.56.0",
     "eslint-config-airbnb-base": "^15.0.0",
-    "eslint-plugin-import": "^2.29.0",
+    "eslint-plugin-import": "^2.29.1",
     "ethers": "^6.10.0",
     "jest-serial-runner": "^1.2.1",
     "patch-package": "^8.0.0",
